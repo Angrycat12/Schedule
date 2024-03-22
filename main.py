@@ -140,6 +140,7 @@ def generate(seed: int = 0, school_week: int = 12, max_nld: int = 1, min_nld: in
     all_hours: int = 0
     max_lesson_d: int = 0
     seed_l: list[int] = []
+    previous_subject = 0
 
     for subject in subjects():
         all_hours = subject.hours + all_hours
@@ -175,10 +176,10 @@ def generate(seed: int = 0, school_week: int = 12, max_nld: int = 1, min_nld: in
                     for subject in subjects():
                         if subject.hours > 0:
                             # if not subjects().index(subject) == seed_l[0]:
-                            if subject.hours > subjects()[long_subject].hours:
+                            if subject.hours > subjects()[long_subject].hours and previous_subject == long_subject:
                                 long_subject = subjects().index(subject)
                     seed_l.append(long_subject)
-
+                    previous_subject = long_subject
                     print('seed: ', seed_l)
                     print('long_subject: ', long_subject)
             print('seed d: ', seed_l)
