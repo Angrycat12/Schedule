@@ -20,44 +20,6 @@ class Subject:
         self.difficult = difficult
         self.MandatoryTests = test
 
-
-class FileManager:
-    """
-    Serves for convenient management of schedule file.
-    """
-    def __init__(self, file_name: str = settings.STANDART_NAME_SUBJECTFILE, mode: str = 'r'):
-        self.file_name = file_name
-        self.mode = mode
-        pass
-
-    def __enter__(self):
-        if self.mode == 'r':
-            self.file = open(file=self.file_name, mode=self.mode)
-        return self.file
-
-    def __exit__(self, exc_type, exc_val, exc_tb):
-        if self.file:
-            self.file.close()
-            pass
-
-
-def RFS_txt(file_name: str) -> dict[str, list[int | bool]]:  # RFS - read file subjects
-    """
-    Reads a file subjects in .txt format.
-    :param file_name: name the file
-    :return: dictionary where the key is the name of the lesson, and the value is the parameters of this lesson
-    """
-    subjects_d: dict = {}
-    with FileManager(file_name) as SubjectFile:
-        try:
-            SubjectFile.read()
-            for word in SubjectFile:
-                pass
-        finally:
-            SubjectFile.close()
-    return subjects_d
-
-
 subjectsf: dict[str, list[int | bool]] = {'Math': [60, True],
                                           'PI': [20, False],
                                           'English': [70, True],
@@ -67,6 +29,18 @@ subjectsf: dict[str, list[int | bool]] = {'Math': [60, True],
                                           'Biology': [50, False],
                                           'Chemistry': [60, True],
                                           'Geograpy': [50, False]}
+
+class Schedule:
+    def __init__(self, schedule):
+        self.week = 0
+        self.day = 0
+        self.lesson = 0
+        self.seed = 0
+        self.schedule = schedule
+        self.subject_schedule: dict[int, list[list[str]]] = {}
+
+    def generate(self):
+        return self.schedule
 
 
 @cache
